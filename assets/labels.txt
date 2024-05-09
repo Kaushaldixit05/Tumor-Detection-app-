@@ -1,4 +1,2 @@
-glioma_tumor
-meningioma_tumor
-no_tumor
-pituitary_tumor
+0 Cancer 
+1 Healthy 

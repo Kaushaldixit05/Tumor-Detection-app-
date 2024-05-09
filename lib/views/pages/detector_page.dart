@@ -22,7 +22,7 @@ class _DetectorPageState extends State<DetectorPage> {
 
   Future loadModel() async {
     await Tflite.loadModel(
-      model: "assets/model.tflite",
+      model: "assets/model_unquant.tflite",
       labels: 'assets/labels.txt',
     );
   }
@@ -47,13 +47,10 @@ class _DetectorPageState extends State<DetectorPage> {
         _image = File(image.path);
 
         _output = null;
-        _loading = true;
       });
 
-      await Future.delayed(const Duration(milliseconds: 200));
 
       detectImage(_image!);
-      _loading = false;
     } on PlatformException {
       //
     }
@@ -69,17 +66,14 @@ class _DetectorPageState extends State<DetectorPage> {
     );
 
     setState(() {
+
       _output = output!;
       try {
         if (_output != null) {
-          if (_output![0]["label"] == "glioma_tumor") {
-            _result = "Glioma Tumor";
-          } else if (_output![0]["label"] == "meningioma_tumor") {
-            _result = "Meningioma Tumor";
-          } else if (_output![0]["label"] == "pituitary_tumor") {
-            _result = "Pituitary Tumor";
-          } else if (_output![0]["label"] == "no_tumor") {
-            _result = "No Tumor Detected";
+          if (_output![0]["label"] == "Cancer") {
+            _result = " Tumor";
+          } else if (_output![0]["label"] == "HHealthy") {
+            _result = "Healthy";
           }
         }
       } catch (e) {
